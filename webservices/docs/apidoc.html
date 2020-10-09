@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/minecraftia" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Minecrafting API Documentation </title>
+    <link rel="stylesheet" href="apidoc.css">
+    <script src="apidoc.js"></script>
+    </head>
+
+  <body>
+    <header>
+        <h1 id="header-text">Minecrafting API Documentation</h1>
+    </header>
+    <main>
+      <h2> Overview </h2>
+      <p>
+        We have provided three web services for you to use on Homework 3: a block-info endpoint,
+        a recipe book endpoint, and a crafting endpoint. Each type of query produces output in plain text 
+        or JSON format <em>(You can test queries by typing in their URL in your browser's address bar and 
+        seeing the result). </em> If you submit an invalid query, such as one missing a necessary parameter, the request 
+        will return an HTTP error code of 400 (Invalid request) rather than the default 200.
+        
+        <br>
+        <br>
+        The rest of this document 
+        provides the necessary information about the endpoints and query types for 
+        the requests you will make for your Minecrafting assignment.
+      </p>
+
+      <h2>Endpoints</h2>
+
+      <!--Endpoint one -->
+      <h3>The Block Information Endpoint:</h3>
+      <p>
+        The first web service, pokedex.php, provides data about all of the different types of blocks including each block's:
+        name, shortname, description, and a list of what it can craft.  This endpoint accepts two different GET endpoints that take the parameter "name".
+      </p>
+      <br>
+      <p class="endpoint"> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/block-info.php  </p>
+      <h4 >Query 1: All Blocks </h4>
+      <p >
+        <em>Reuqest Format: </em> block-info.php?name=all <br>
+        <em>Reuqest Type: </em> GET <br> 
+        <em>Returned Data Format: </em> plain text <br>
+        <em>Description: </em>
+        This first request takes the parameter all and returns a plain text response with a line for all 120 block names. 
+        The block's full name is followed by its shortname separated by a single ":", as in: 
+        <br>
+        <i>Full Name:shortname </i>
+        <br>
+        The shortname is included in the response to specify the base string for the block images (which are all .png files). This shortname 
+        can also be used for the "name" query parameter in the block-info.php API. This shortname helps handle the few cases when a blocks's 
+        full name has non-alphabetical characters. For example, the "Acacia Log" block has a shortname of "acacia-log" which corresponds 
+        to the block image at the following location: https://courses.cs.washington.edu/courses/cse154/webservices/pokedex/images/acacia-log.png
+        <br>
+        <em>Request: </em> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/block-inapidocfo.php?type=all <br>
+        <em>Output: </em>(abbreviated)
+      </p> 
+      <hr />
+      <p id="all-blocks">
+        Acacia Log:acacia-log <br>
+        Acacia Planks:acacia-planks <br>
+        Anvil:anvil <br> 
+        ... <br>
+        Golden Boots:golden-boots<br>
+        ... <br>
+        Wool:wool
+      </p>
+      <hr />
+      <h4>Query 2: Block Details </h4>
+      <p><em>Reuqest Format: </em> block-info.php?name={shortname}</p>
+      <p><em>Reuqest Type: GET </em></p>
+      <p><em>Returned Data Format: </em> JSON </p>
+      <p><em>Description: </em> This endpoint takes the paramter of the bricks shortname, and returns the bricks formal 
+        name, short name, a fun fact about the brick, and an array of the bricks that are possible to craft with the passed query paramter.
+      </p> 
+      <p><em>Request: </em>https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/block-info.php?type=redstone-dust</p>
+      <hr>
+      <pre id="redstone"></pre>
+      <hr> <br>
+   
+      <!--Endpoint 2 -->
+      <h3>The Crafting Recipes Endpoint:</h3>
+      <p>
+       The Crafting Recipes Endpoint returns crafting recipes that make the objects in the game. These JSON objects are formatted to include 
+      </p>
+      <p class="endpoint"> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/recipes.php  </p>
+      <h4 >Query 1: All Recipes </h4>
+      <p>
+        <em>Reuqest Format: </em> recipes.php?block=all <br>
+        <em>Reuqest Type: </em> GET <br> 
+        <em>Returned Data Format: </em> JSON <br>
+        <em>Description: </em> This endpoint takes a query parameter of "block" which for this query will pass the value of "all". And returns a JSON object with all of the possible recipes in the game, 
+        with the shortname of the the brick resulted from crafting, and a list of 9 values with either the shortname value of the block in the given square in the crafting grid, or the value of <i>null</i> if the crafting 
+        square is empty. 
+        <br>
+        <em>Request: </em> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/recipes.php?brick=all <br>
+        <em>Output: </em>(abbreviated)
+      </p> 
+      <hr />
+      <p id="all-recipes">
+        [
+        <span></span><pre id="start"></pre>
+        <span></span><p>     ...</p>
+        <pre id="middle"></pre>
+        <p>...</p>
+        <pre id="last"></pre>
+        ]
+      </p>
+      <hr />
+      <br>
+
+      <h4 >Query 2: Specific Recipes </h4>
+      <p >
+        <em>Reuqest Format: </em> recipes.php?block={shortname} <br>
+        <em>Reuqest Type: </em> GET <br> 
+        <em>Returned Data Format: </em> JSON <br>
+        <em>Description: </em>
+        This endpoint takes a query parameter of "block" which for this query will pass the value of "all". And returns a JSON object with the recipe where the result value matches the passed block parameter. 
+        This JSON response object is foramtted with the shortname of the the brick resulted from crafting as the first value followed by a list of 9 values with either the shortname value of the block in the given 
+        square in the crafting grid, or the value of <i>null</i> if the crafting 
+        square is empty. <br>
+        <em>Request: </em> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/recipes.php?brick=blast-furnace <br>
+        <em>Output: </em>
+      </p> 
+      <hr />
+      <p id="all">
+        <pre id="single"></pre>
+      </p>
+      <hr />
+      <br>
+
+      <!--third endpoint -->
+      <h3>The Crafting Endpoint:</h3>
+      <p>
+        The final web service, crafting.php, provides a POST request to check the contents of your crafting table to let the user know whether their table was able to craft 
+        a new brick. If the contents of your crafting table do not craft anything, there will be a 400 error, otherwise the shortname of the newly crafted brick will be returned 
+        to the user. 
+      </p>
+    
+      <p class="endpoint"> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/crafting.php  </p>
+     
+
+      <h4 >Query 1: Did It Craft? </h4>
+      <p >
+        <em>Reuqest Format: </em> crafting.php <br>
+        <em>Reuqest Type: </em> POST <br> 
+        <em>Returned Data Format: </em> plain text <br>
+        <em>Description: </em>This query submits an attempted crafting recipe to the   <br>
+        <em>Request: </em> https://courses.cs.washington.edu/courses/cse154/webservices/minecrafting/crafting.php <br>
+        <em>Output: </em>
+      </p> 
+      <hr />
+      <p id="all">birch-planks </p>
+      <hr />
+      <br>
+  </body>
+</html>

@@ -1,7 +1,8 @@
-# Minecrafting React Simulator- Project Specifications #
+# Minecrafting React Simulator - Project Specifications #
 
+##WEBSERVICE BASE URL http://minecrafting.byethost24.com/webservices/
 ## **Overview** ##
-This assignment is about using AJAX to fetch data in text and JSON format and processing it using DOM manipulation. You will only be writing JavaScript in this assignment. All HTML and CSS are already provided for you!
+This assignment is about using AJAX to fetch data in text and JSON format and processing it using DOM manipulation. We will go over all steps in the process from setting up a react app to styling the page with JSX elements and 
 
 ![Minecrafting Homepage](./img/home.png)
 
